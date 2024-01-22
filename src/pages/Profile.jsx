@@ -1,7 +1,17 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, {useContext, useEffect} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import {AuthContextData} from "./AuthContextProvider";
 
 function Profile() {
+    //Data Context ophalen
+    const { isAuth } = useContext(AuthContextData);
+    // Navigate function ophalen
+    const navigate = useNavigate();
+
+    //useEffect verandering opmerken, bij renderen eerst kijken of ingelogd is. Als niet ingelogd navigeer naar login page
+    useEffect(() => {
+    !isAuth && navigate('/login');
+    }, [isAuth]);
   return (
     <>
       <h1>Profielpagina</h1>
