@@ -8,7 +8,7 @@ import {AuthContextData} from "../pages/AuthContextProvider";
 //     Geef de waarde van de state mee aan het data object.
 function NavBar() {
     const navigate = useNavigate();
-    const {isAuth, isAuthenticated} = useContext(AuthContextData);
+    const {isAuth, logOut} = useContext(AuthContextData);
     return (
         <nav>
             <Link to="/">
@@ -20,9 +20,7 @@ function NavBar() {
           </span>
             </Link>
             {isAuth ? (<div>
-                <button onClick={() => {
-                    isAuthenticated(false);
-                }}>Loguit
+                <button onClick={logOut}>Loguit
                 </button>
             </div>) : (
                 <div>

@@ -3,7 +3,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import {AuthContextData} from "./AuthContextProvider";
 
 function SignIn() {
-    const {isAuth, isAuthenticated, userLogin} = useContext(AuthContextData);
+    const {isAuth, userLogin} = useContext(AuthContextData);
     const navigate = useNavigate();
     useEffect(() => {
         if (isAuth) {
@@ -16,11 +16,11 @@ function SignIn() {
                         <p>Log hierin met uw gebruikersnaam en wachtwoord</p>
                         <form>
                             <input type="text" name="username" id="username" placeholder="gebruikersnaam"
-                                   value={"formdate"}></input>
+                                   ></input>
                             <input type="password" name="password" id="password" placeholder="******"></input>
                             <button type="submit" onClick={(e) => {
                                 e.preventDefault();
-                              isAuthenticated(true);
+                                 userLogin("Test", "pasdasd");
                             }}>Inloggen
                             </button>
                         </form>
