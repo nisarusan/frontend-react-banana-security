@@ -14,19 +14,6 @@ function SignIn() {
     }, [isAuth]);
     const { register, handleSubmit } = useForm();
 
-    async function loginUser(data) {
-        try {
-            const {username, password} = data;
-            const request = await axios.post('http://localhost:3000/login', {
-                email: username,
-                password
-            });
-            console.log(isAuth + userLogin);
-            userLogin(request.data.accessToken);
-        } catch(e) {
-            console.error(e)
-        }
-    }
     async function handleFormSubmit(data) {
             try {
                 const {username, password} = data;

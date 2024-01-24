@@ -9,6 +9,11 @@ import {AuthContextData} from "../pages/AuthContextProvider";
 function NavBar() {
     const navigate = useNavigate();
     const {isAuth, logOut} = useContext(AuthContextData);
+    const handleLogout = () => {
+        logOut();
+        console.log("LogOut button clicked.");
+    };
+
     return (
         <nav>
             <Link to="/">
@@ -20,10 +25,7 @@ function NavBar() {
           </span>
             </Link>
             {isAuth ? (<div>
-                <button onClick={() => {
-                    logOut();
-                    console.log("LogOut button clicked.");
-                }}>Loguit
+                <button onClick={handleLogout}>Loguit
                 </button>
             </div>) : (
                 <div>

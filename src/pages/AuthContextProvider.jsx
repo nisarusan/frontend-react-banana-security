@@ -2,7 +2,7 @@ import React, {createContext, useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
-import {set} from "react-hook-form";
+
 
 export const AuthContextData = createContext(null);
 function AuthContextProvider({children}) {
@@ -40,7 +40,6 @@ function AuthContextProvider({children}) {
         const decode = jwtDecode(data);
         const {sub, email} = decode;
         localStorage.setItem('token', data);
-        console.log(decode);
         try {
             const response = await axios.get(`http://localhost:3000/600/users/${sub}`, {
                 headers: {
@@ -65,9 +64,7 @@ function AuthContextProvider({children}) {
 
     function logOut() {
         localStorage.clear();
-        setAuthenticated(    { isAuth: false,
-            user: null,
-            status: "pending" });
+        setAuthenticated( false);
         navigate('/');
     }
 
