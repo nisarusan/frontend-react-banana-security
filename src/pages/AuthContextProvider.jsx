@@ -1,10 +1,16 @@
-import React, {createContext, useContext, useState} from "react";
+import React, {createContext, useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import {jwtDecode} from "jwt-decode";
+import {set} from "react-hook-form";
 
 export const AuthContextData = createContext(null);
-
 function AuthContextProvider({children}) {
-    const [isAuth, isAuthenticated] = useState(true);
+    const [isAuth, setAuthenticated] = useState({
+        isAuth: false,
+        user: null,
+        status: 'pending'
+    });
     const navigate = useNavigate();
     const data = {
         isAuth,
@@ -13,23 +19,65 @@ function AuthContextProvider({children}) {
         banaan: "He I'm a banaan!",
         age: 13
     };
-    function userLogin(username, password) {
-       if(username) {
-           console.log(username.value);
-           console.log(`U bent ingelogd met uw gebruikersnaam: ${username} en wachtwoord: ${password}`);
-           isAuthenticated(true);
-           navigate('/profile');
-       } else {
-           console.log(`U heeft een verkeerd wachtwoord ingevoerd`);
+
+    useEffect(() => {
+       const token = localStorage.getItem('token');
+       if(token) {
+        void userLogin(token);
+         }
+       else {
+        setAuthenticated({
+            isAuth: false,
+            user: null,
+            status: "done"
+        })
        }
+
+
+    }, []);
+
+    async function userLogin(data) {
+        const decode = jwtDecode(data);
+        const {sub, email} = decode;
+        localStorage.setItem('token', data);
+        console.log(decode);
+        try {
+            const response = await axios.get(`http://localhost:3000/600/users/${sub}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${data}`
+                }
+            })
+           setAuthenticated({
+               isAuth: true,
+               user: {
+                   username: response.data.email,
+                   email: response.data.email,
+                   id:  response.data.id
+               }
+           });
+            navigate('/profile');
+        } catch (error) {
+            console.error("Error setting token in localStorage:", error);
+            logOut();
+        }
     }
+
     function logOut() {
-        isAuthenticated(false);
+        localStorage.clear();
+        setAuthenticated(    { isAuth: false,
+            user: null,
+            status: "pending" });
         navigate('/');
     }
+
+
+
+
     return (
         <AuthContextData.Provider value={data}>
             {children}
+            {/*{isAuth === 'done' ? children : <p>Loading</p>}*/}
         </AuthContextData.Provider>
     )
 }

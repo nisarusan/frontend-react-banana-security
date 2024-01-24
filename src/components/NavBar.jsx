@@ -20,7 +20,10 @@ function NavBar() {
           </span>
             </Link>
             {isAuth ? (<div>
-                <button onClick={logOut}>Loguit
+                <button onClick={() => {
+                    logOut();
+                    console.log("LogOut button clicked.");
+                }}>Loguit
                 </button>
             </div>) : (
                 <div>

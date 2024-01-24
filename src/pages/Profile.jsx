@@ -10,7 +10,7 @@ function Profile() {
 
     //useEffect verandering opmerken, bij renderen eerst kijken of ingelogd is. Als niet ingelogd navigeer naar login page
     useEffect(() => {
-    !isAuth && navigate('/login');
+    !isAuth && navigate('/signin');
     }, [isAuth]);
   return (
     <>
