@@ -47,6 +47,7 @@ function AuthContextProvider({children}) {
                     Authorization: `Bearer ${data}`
                 }
             })
+            //Test
            setAuthenticated({
                isAuth: true,
                user: {
