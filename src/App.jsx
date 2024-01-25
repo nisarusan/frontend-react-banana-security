@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import './App.css';
+import  MoviesApp from "./pages/MovieApp";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <div className="content">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/TestPage" element={<MovieApp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
